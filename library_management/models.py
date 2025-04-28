@@ -4,11 +4,18 @@ from django.db import models
 class Library(models.Model):
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
-    latitude = models.FloatField()
-    longitude = models.FloatField()
+    phone_number = models.CharField(max_length=20)
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = "Libraries"
+
+
+# assumptions:
+# 1. Each library can have multiple books.
+# 2. Each book can belong to only one library.
 
 
 class Book(models.Model):
@@ -18,7 +25,6 @@ class Book(models.Model):
     category = models.ForeignKey("Category", on_delete=models.SET_NULL, null=True)
     published_date = models.DateField()
     isbn = models.CharField(max_length=13, unique=True)
-    count = models.PositiveIntegerField(default=1)
 
     def __str__(self):
         return self.title
@@ -38,3 +44,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = "Categories"
+        ordering = ["name"]
