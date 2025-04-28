@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "corsheaders",
+    "drf_spectacular",
     # local apps
 ]
 
@@ -56,6 +57,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
     ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 REST_AUTH = {
@@ -78,6 +80,16 @@ SIMPLE_JWT = {
 SITE_ID = 1
 
 ACCOUNT_EMAIL_VERIFICATION = "none"
+
+
+# Spectacular settings
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Library Management System API",
+    "DESCRIPTION": "A modern library management system API",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+}
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
