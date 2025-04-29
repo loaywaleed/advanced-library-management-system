@@ -2,10 +2,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import (
     IsAuthenticatedOrReadOnly,
     AllowAny,
-    IsAuthenticated,
 )
-from rest_framework.decorators import action
-from rest_framework.response import Response
 from .serializers import (
     BookSerializer,
     AuthorSerializer,
@@ -24,25 +21,6 @@ class LibraryViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_class = LibraryFilter
     filterset_fields = ["category", "author"]
-
-    @action(detail=False, methods=["GET"])
-    def nearby(self, request):
-        """Get nearby libraries"""
-        try:
-            radius = float(request.query_params.get("radius", 5))
-
-            if not hasattr(request.user, "userlocation"):
-                return Response({"error": "User location not set"}, status=400)
-
-            nearby_libraries = request.user.userlocation.get_nearby_libraries(
-                radius_km=radius
-            )
-
-            serializer = self.get_serializer(nearby_libraries, many=True)
-            return Response(serializer.data)
-
-        except ValueError:
-            return Response({"error": "Invalid radius parameter"}, status=400)
 
 
 class BookViewSet(viewsets.ModelViewSet):
