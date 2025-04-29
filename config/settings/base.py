@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.gis",
     # third-party apps
     "rest_framework",
     "rest_framework.authtoken",
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
     "django_filters",
     # local apps
     "library_management",
+    "users",
 ]
 
 # Auth
@@ -72,6 +74,8 @@ REST_AUTH = {
     "JWT_AUTH_SAMESITE": "Lax",
     "JWT_AUTH_HTTP_ONLY": True,
     "JWT_AUTH_COOKIE_USE_CSRF": True,
+    "REGISTER_SERIALIZER": "users.serializers.CustomRegisterSerializer",
+    "USER_DETAILS_SERIALIZER": "users.serializers.CustomUserDetailsSerializer",
 }
 
 SIMPLE_JWT = {
@@ -133,8 +137,12 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.contrib.gis.db.backends.postgis",
+        "NAME": os.getenv("DB_NAME", "library_db"),
+        "USER": os.getenv("DB_USER", "postgres"),
+        "PASSWORD": os.getenv("DB_PASSWORD", ""),
+        "HOST": os.getenv("DB_HOST", "localhost"),
+        "PORT": os.getenv("DB_PORT", "5432"),
     }
 }
 
