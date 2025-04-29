@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "corsheaders",
     "drf_spectacular",
+    "django_filters",
     # local apps
     "library_management",
 ]
