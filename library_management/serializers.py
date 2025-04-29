@@ -3,15 +3,17 @@ from rest_framework import serializers
 
 
 class AuthorSerializer(serializers.ModelSerializer):
+    book_count = serializers.IntegerField(source="get_book_count", read_only=True)
+
     class Meta:
         model = Author
-        fields = ["id", "name"]
+        fields = ["id", "name", "bio", "book_count"]
 
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ["id", "name"]
+        fields = ["id", "name", "description"]
 
 
 class LibrarySerializer(serializers.ModelSerializer):

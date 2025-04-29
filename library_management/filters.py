@@ -21,6 +21,19 @@ class BookFilter(django_filters.FilterSet):
         fields = ["category", "author", "library"]
 
 
+class AuthorFilter(django_filters.FilterSet):
+    library = django_filters.CharFilter(
+        field_name="book__library__name", lookup_expr="icontains"
+    )
+    category = django_filters.CharFilter(
+        field_name="book__category__name", lookup_expr="icontains"
+    )
+
+    class Meta:
+        model = Author
+        fields = ["library", "category"]
+
+
 class LibraryFilter(filters.FilterSet):
     radius = filters.NumberFilter(method="filter_by_user_location")
     category = filters.CharFilter(

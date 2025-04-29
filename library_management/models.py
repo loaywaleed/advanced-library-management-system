@@ -36,6 +36,9 @@ class Author(models.Model):
     name = models.CharField(max_length=255)
     bio = models.TextField()
 
+    def get_book_count(self):
+        return self.book_set.count()
+
     def __str__(self):
         return self.name
 

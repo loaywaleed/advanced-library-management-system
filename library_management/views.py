@@ -13,7 +13,7 @@ from .serializers import (
     LibrarySerializer,
 )
 from django_filters.rest_framework import DjangoFilterBackend
-from .filters import BookFilter, LibraryFilter
+from .filters import BookFilter, LibraryFilter, AuthorFilter
 from .models import Book, Author, Category, Library
 
 
@@ -57,6 +57,8 @@ class AuthorViewSet(viewsets.ModelViewSet):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = AuthorFilter
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
