@@ -15,9 +15,11 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class LibrarySerializer(serializers.ModelSerializer):
+    distance = serializers.FloatField(source="get_distance", read_only=True)
+
     class Meta:
         model = Library
-        fields = ["id", "name", "address"]
+        fields = ["id", "name", "address", "phone_number", "location", "distance"]
 
 
 class BookSerializer(serializers.ModelSerializer):
