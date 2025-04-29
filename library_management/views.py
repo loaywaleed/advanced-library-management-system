@@ -54,11 +54,18 @@ class BookViewSet(viewsets.ModelViewSet):
 
 
 class AuthorViewSet(viewsets.ModelViewSet):
-    queryset = Author.objects.all()
     serializer_class = AuthorSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend]
     filterset_class = AuthorFilter
+
+    def get_queryset(self):
+        filters = {}
+        if "library" in self.request.query_params:
+            filters["library"] = self.request.query_params["library"]
+        if "category" in self.request.query_params:
+            filters["category"] = self.request.query_params["category"]
+        return Author.get_filtered_authors(filters)
 
 
 class CategoryViewSet(viewsets.ModelViewSet):

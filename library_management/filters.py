@@ -22,16 +22,18 @@ class BookFilter(django_filters.FilterSet):
 
 
 class AuthorFilter(django_filters.FilterSet):
-    library = django_filters.CharFilter(
-        field_name="book__library__name", lookup_expr="icontains"
-    )
-    category = django_filters.CharFilter(
-        field_name="book__category__name", lookup_expr="icontains"
-    )
+    library = django_filters.CharFilter(method="filter_by_library")
+    category = django_filters.CharFilter(method="filter_by_category")
 
     class Meta:
         model = Author
         fields = ["library", "category"]
+
+    def filter_by_library(self, queryset, name, value):
+        return Author.get_filtered_authors({"library": value})
+
+    def filter_by_category(self, queryset, name, value):
+        return Author.get_filtered_authors({"category": value})
 
 
 class LibraryFilter(filters.FilterSet):

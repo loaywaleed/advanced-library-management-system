@@ -3,7 +3,7 @@ from rest_framework import serializers
 
 
 class AuthorSerializer(serializers.ModelSerializer):
-    book_count = serializers.IntegerField(source="get_book_count", read_only=True)
+    book_count = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Author
