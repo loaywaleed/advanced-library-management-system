@@ -52,6 +52,31 @@ class Author(models.Model):
             )
         )
 
+    @classmethod
+    def get_authors_with_books(cls, filters=None):
+        """
+        Get authors with prefetched books and categories, optionally filtered
+        """
+        queryset = cls.objects.prefetch_related(
+            models.Prefetch(
+                "books", queryset=Book.objects.select_related("category", "library")
+            )
+        )
+
+        if filters:
+            if "library" in filters:
+                queryset = queryset.filter(
+                    books__library__name__icontains=filters["library"]
+                )
+            if "category" in filters:
+                queryset = queryset.filter(
+                    books__category__name__icontains=filters["category"]
+                )
+
+        return queryset.distinct().annotate(
+            book_count=models.Count("books", distinct=True)
+        )
+
     def __str__(self):
         return self.name
 

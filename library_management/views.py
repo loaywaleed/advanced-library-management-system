@@ -3,11 +3,14 @@ from rest_framework.permissions import (
     IsAuthenticatedOrReadOnly,
     AllowAny,
 )
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from .serializers import (
     BookSerializer,
     AuthorSerializer,
     CategorySerializer,
     LibrarySerializer,
+    AuthorWithBooksSerializer,
 )
 from django_filters.rest_framework import DjangoFilterBackend
 from .filters import BookFilter, LibraryFilter, AuthorFilter
@@ -44,6 +47,17 @@ class AuthorViewSet(viewsets.ModelViewSet):
         if "category" in self.request.query_params:
             filters["category"] = self.request.query_params["category"]
         return Author.get_filtered_authors(filters)
+
+    @action(detail=False, methods=['GET'])
+    def with_books(self, request):
+        filters = {}
+        for param in ['library', 'category']:
+            if param in request.query_params:
+                filters[param] = request.query_params[param]
+        
+        authors = Author.get_authors_with_books(filters)
+        serializer = AuthorWithBooksSerializer(authors, many=True)
+        return Response(serializer.data)
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
