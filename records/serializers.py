@@ -2,12 +2,12 @@ from rest_framework import serializers
 from django.core.exceptions import ValidationError
 from datetime import date
 from .models import BorrowingRecord
-from library_management.serializers import SimpleBookSerializer
+from library_management.serializers import BookSerializer
 from library_management.models import Book
 
 
 class BorrowingRecordOutputSerializer(serializers.ModelSerializer):
-    book = SimpleBookSerializer(read_only=True)
+    book = BookSerializer(read_only=True)
     user = serializers.StringRelatedField(read_only=True)
     is_overdue = serializers.BooleanField(read_only=True)
     penalty_amount = serializers.DecimalField(
