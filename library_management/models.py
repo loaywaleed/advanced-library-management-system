@@ -23,6 +23,7 @@ class Book(models.Model):
         "Category", on_delete=models.SET_NULL, null=True, related_name="books"
     )
     published_date = models.DateField()
+    # available_copies = models.PositiveIntegerField(default=0)
     isbn = models.CharField(max_length=13, unique=True)
 
     def __str__(self):
@@ -31,7 +32,6 @@ class Book(models.Model):
 
 class Author(models.Model):
     name = models.CharField(max_length=255)
-    bio = models.TextField()
 
     @classmethod
     def get_filtered_authors(cls, filters=None):
@@ -80,7 +80,6 @@ class Author(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
-    description = models.TextField()
 
     def __str__(self):
         return self.name
