@@ -54,9 +54,6 @@ class Author(models.Model):
 
     @classmethod
     def get_authors_with_books(cls, filters=None):
-        """
-        Get authors with prefetched books and categories, optionally filtered
-        """
         queryset = cls.objects.prefetch_related(
             models.Prefetch(
                 "books", queryset=Book.objects.select_related("category", "library")
