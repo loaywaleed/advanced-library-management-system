@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     # local apps
     "library_management",
     "users",
+    "records",
 ]
 
 # Auth

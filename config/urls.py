@@ -33,4 +33,5 @@ urlpatterns = [
     path("api/v1/auth/register", include("dj_rest_auth.registration.urls")),
     # library management endpoints
     path("api/v1/", include("library_management.urls")),
+    path("api/v1/", include("records.urls")),
 ]
