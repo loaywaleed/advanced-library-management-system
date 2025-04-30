@@ -23,11 +23,14 @@ class Book(models.Model):
         "Category", on_delete=models.SET_NULL, null=True, related_name="books"
     )
     published_date = models.DateField()
-    # available_copies = models.PositiveIntegerField(default=0)
-    isbn = models.CharField(max_length=13, unique=True)
+    available_copies = models.PositiveIntegerField(default=0)
+    isbn = models.CharField(max_length=13)
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        unique_together = ("isbn", "library")
 
 
 class Author(models.Model):
