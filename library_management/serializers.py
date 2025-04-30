@@ -7,21 +7,18 @@ class AuthorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Author
-        fields = ["id", "name", "bio", "book_count"]
+        fields = ["id", "name", "book_count"]
 
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ["id", "name", "description"]
+        fields = ["id", "name"]
 
 
 class BookSerializer(serializers.ModelSerializer):
-    author = AuthorSerializer()
-    category = CategorySerializer()
-    library_id = serializers.PrimaryKeyRelatedField(
-        queryset=Library.objects.all(), source="library"
-    )
+    author = serializers.StringRelatedField()
+    category = serializers.StringRelatedField()
     library_name = serializers.StringRelatedField(source="library", read_only=True)
 
     class Meta:
