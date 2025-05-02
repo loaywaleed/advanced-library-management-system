@@ -45,7 +45,7 @@ class AuthorWithBooksSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Author
-        fields = ["id", "name", "bio", "books", "book_count"]
+        fields = ["id", "name", "books", "book_count"]
 
 
 class LibrarySerializer(serializers.ModelSerializer):
