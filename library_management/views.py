@@ -4,7 +4,6 @@ from rest_framework.permissions import (
     AllowAny,
 )
 from rest_framework.decorators import action
-from rest_framework.response import Response
 from .serializers import (
     BookSerializer,
     AuthorSerializer,
@@ -48,16 +47,18 @@ class AuthorViewSet(viewsets.ModelViewSet):
             filters["category"] = self.request.query_params["category"]
         return Author.get_filtered_authors(filters)
 
-    @action(detail=False, methods=['GET'])
+    @action(detail=False, methods=["GET"])
     def with_books(self, request):
         filters = {}
-        for param in ['library', 'category']:
+        for param in ["library", "category"]:
             if param in request.query_params:
                 filters[param] = request.query_params[param]
-        
-        authors = Author.get_authors_with_books(filters)
-        serializer = AuthorWithBooksSerializer(authors, many=True)
-        return Response(serializer.data)
+        # get query
+        fetched_query = Author.get_authors_with_books(filters)
+        # pagination
+        page = self.paginate_queryset(fetched_query)
+        serializer = AuthorWithBooksSerializer(page, many=True)
+        return self.get_paginated_response(serializer.data)
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
