@@ -5,7 +5,7 @@ from django.db.models import F
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 
-from library_management.models import Book
+from api.library_management.models import Book
 from .models import BorrowingRecord
 from .tasks import send_borrowing_confirmation
 

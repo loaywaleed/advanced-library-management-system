@@ -53,9 +53,9 @@ INSTALLED_APPS = [
     "django_filters",
     "django_celery_beat",
     # local apps
-    "library_management",
-    "users",
-    "records",
+    "api.library_management",
+    "api.users",
+    "api.records",
 ]
 
 # Auth
@@ -76,8 +76,8 @@ REST_AUTH = {
     "JWT_AUTH_SAMESITE": "Lax",
     "JWT_AUTH_HTTP_ONLY": True,
     "JWT_AUTH_COOKIE_USE_CSRF": False,  # temp
-    "REGISTER_SERIALIZER": "users.serializers.CustomRegisterSerializer",
-    "USER_DETAILS_SERIALIZER": "users.serializers.CustomUserDetailsSerializer",
+    "REGISTER_SERIALIZER": "api.users.serializers.CustomRegisterSerializer",
+    "USER_DETAILS_SERIALIZER": "api.users.serializers.CustomUserDetailsSerializer",
 }
 
 SIMPLE_JWT = {

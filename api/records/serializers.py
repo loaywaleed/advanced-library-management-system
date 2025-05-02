@@ -2,8 +2,8 @@ from rest_framework import serializers
 from django.core.exceptions import ValidationError
 from datetime import date
 from .models import BorrowingRecord
-from library_management.serializers import BookSerializer
-from library_management.models import Book
+from api.library_management.serializers import BookSerializer
+from api.library_management.models import Book
 
 
 class BorrowingRecordOutputSerializer(serializers.ModelSerializer):

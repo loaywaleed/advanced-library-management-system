@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.gis.db import models as gis_models
 from django.contrib.gis.geos import Point
 from django.contrib.gis.db.models.functions import Distance
-from library_management.models import Library
+from api.library_management.models import Library
 
 
 class UserLocation(models.Model):
