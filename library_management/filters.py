@@ -39,10 +39,10 @@ class AuthorFilter(django_filters.FilterSet):
 class LibraryFilter(filters.FilterSet):
     radius = filters.NumberFilter(method="filter_by_user_location")
     category = filters.CharFilter(
-        field_name="book__category__name", lookup_expr="icontains"
+        field_name="books__category__name", lookup_expr="icontains"
     )
     author = filters.CharFilter(
-        field_name="book__author__name", lookup_expr="icontains"
+        field_name="books__author__name", lookup_expr="icontains"
     )
 
     class Meta:
