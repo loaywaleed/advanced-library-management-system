@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "drf_spectacular",
     "django_filters",
+    "django_celery_beat",
     # local apps
     "library_management",
     "users",
@@ -74,7 +75,7 @@ REST_AUTH = {
     "JWT_AUTH_SECURE": False,
     "JWT_AUTH_SAMESITE": "Lax",
     "JWT_AUTH_HTTP_ONLY": True,
-    "JWT_AUTH_COOKIE_USE_CSRF": True,
+    "JWT_AUTH_COOKIE_USE_CSRF": False,  # temp
     "REGISTER_SERIALIZER": "users.serializers.CustomRegisterSerializer",
     "USER_DETAILS_SERIALIZER": "users.serializers.CustomUserDetailsSerializer",
 }
