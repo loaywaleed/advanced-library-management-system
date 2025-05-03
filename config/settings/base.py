@@ -73,9 +73,9 @@ REST_AUTH = {
     "JWT_AUTH_COOKIE": "library-auth",
     "JWT_AUTH_REFRESH_COOKIE": "library-refresh",
     "JWT_AUTH_SECURE": False,
-    "JWT_AUTH_SAMESITE": "Lax",
+    "JWT_AUTH_SAMESITE": "None",
     "JWT_AUTH_HTTP_ONLY": True,
-    "JWT_AUTH_COOKIE_USE_CSRF": False,  # temp
+    "JWT_AUTH_COOKIE_USE_CSRF": True,
     "REGISTER_SERIALIZER": "api.users.serializers.CustomRegisterSerializer",
     "USER_DETAILS_SERIALIZER": "api.users.serializers.CustomUserDetailsSerializer",
 }
