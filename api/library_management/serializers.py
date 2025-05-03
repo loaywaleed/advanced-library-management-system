@@ -27,18 +27,6 @@ class BookSerializer(serializers.ModelSerializer):
         read_only_fields = ["id", "created_at", "updated_at"]
 
 
-# class SimpleBookSerializer(serializers.ModelSerializer):
-#     """To use in Loaded Authors Serializer"""
-
-#     category = serializers.StringRelatedField(read_only=True)
-#     library_name = serializers.StringRelatedField(source="library", read_only=True)
-
-#     class Meta:
-#         model = Book
-#         fields = ["id", "title", "category", "library_name", "published_date", "isbn"]
-#         read_only_fields = ["id", "created_at", "updated_at"]
-
-
 class AuthorWithBooksSerializer(serializers.ModelSerializer):
     books = BookSerializer(many=True, read_only=True)
     book_count = serializers.IntegerField(read_only=True)
@@ -49,7 +37,7 @@ class AuthorWithBooksSerializer(serializers.ModelSerializer):
 
 
 class LibrarySerializer(serializers.ModelSerializer):
-    distance = serializers.FloatField(source="get_distance", read_only=True)
+    distance = serializers.FloatField(read_only=True)
 
     class Meta:
         model = Library
