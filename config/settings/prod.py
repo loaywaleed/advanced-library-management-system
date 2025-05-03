@@ -2,12 +2,18 @@ from .base import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = ["loaywaleed.tech"]
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "yumi.loaywaleed.tech",
+]
 
 # CORS Settings
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
     "https://loaywaleed.tech",
+    "http://localhost:8000",
+    "http://locahost:3000",
 ]
 CORS_ALLOW_CREDENTIALS = True
 CORS_EXPOSE_HEADERS = ["Content-Type", "X-CSRFToken"]
@@ -21,11 +27,7 @@ CSRF_COOKIE_SAMESITE = "None"
 SESSION_COOKIE_SAMESITE = "None"
 
 # CSRF Trusted Origins
-CSRF_TRUSTED_ORIGINS = [
-    "https://loaywaleed.tech",
-    "https://yumi.loaywaleed.tech",
-]
-
+CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
 # rest auth
 REST_AUTH.update(
     {
@@ -58,3 +60,5 @@ SECURE_HSTS_PRELOAD = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = "DENY"
+
+EMAIL_BACKEND = "django.core.mail.backends.dummy.EmailBackend"

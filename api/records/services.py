@@ -1,10 +1,9 @@
 from datetime import date, timedelta
-
+import os
 from django.db import transaction, DatabaseError
 from django.db.models import F
 from django.core.exceptions import ValidationError
 from django.utils import timezone
-
 from api.library_management.models import Book
 from .models import BorrowingRecord
 from .tasks import send_borrowing_confirmation
@@ -73,7 +72,8 @@ class BorrowingService:
             created_records = BorrowingRecord.objects.bulk_create(records_to_create)
             Book.objects.bulk_update(locked_books, ["available_copies"])
             borrowing_ids = [record.id for record in created_records]
-            send_borrowing_confirmation.delay(borrowing_ids)
+            if os.getenv("DJANGO_ENV") == "development":
+                send_borrowing_confirmation.delay(borrowing_ids)
             return created_records
         except DatabaseError as e:
             raise ValidationError(

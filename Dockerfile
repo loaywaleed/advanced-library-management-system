@@ -6,13 +6,15 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-
 RUN which uv && uv --version
 
 ADD . /app
 
 WORKDIR /app
 RUN uv sync --locked
+
+RUN echo "Checking contents of /app/.venv/bin:" && \
+    ls -la /app/.venv/bin || echo "/app/.venv/bin not found or empty"
 
 # Install GDAL system libraries
 RUN apt-get update && apt-get install -y \
@@ -23,9 +25,12 @@ RUN apt-get update && apt-get install -y \
 
 ENV PATH="/app/.venv/bin:$PATH"
 
+RUN echo "Checking executables in PATH:" && \
+    which python && \
+    which gunicorn && \
+    which celery || echo "Executables not found in PATH"
+
 RUN python manage.py collectstatic --noinput
 
 
-EXPOSE 8000
-
-CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3"]
+# CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3", "--timeout", "120"]
